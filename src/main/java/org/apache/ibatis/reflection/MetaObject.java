@@ -21,11 +21,7 @@ import java.util.Map;
 
 import org.apache.ibatis.reflection.factory.ObjectFactory;
 import org.apache.ibatis.reflection.property.PropertyTokenizer;
-import org.apache.ibatis.reflection.wrapper.BeanWrapper;
-import org.apache.ibatis.reflection.wrapper.CollectionWrapper;
-import org.apache.ibatis.reflection.wrapper.MapWrapper;
-import org.apache.ibatis.reflection.wrapper.ObjectWrapper;
-import org.apache.ibatis.reflection.wrapper.ObjectWrapperFactory;
+import org.apache.ibatis.reflection.wrapper.*;
 
 /**
  * @author Clinton Begin
@@ -52,6 +48,8 @@ public class MetaObject {
       this.objectWrapper = new MapWrapper(this, (Map) object);
     } else if (object instanceof Collection) {
       this.objectWrapper = new CollectionWrapper(this, (Collection) object);
+    } else if (object.getClass().isArray()) {
+      this.objectWrapper = new ArrayWrapper(this, object);
     } else {
       this.objectWrapper = new BeanWrapper(this, object);
     }
